@@ -1,9 +1,10 @@
-package net.timandersen;
+package net.timandersen.web;
 
 import junit.framework.TestCase;
 import net.timandersen.domain.Product;
 import net.timandersen.repository.InMemoryProductDao;
 import net.timandersen.service.SimpleProductManager;
+import net.timandersen.web.InventoryController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;

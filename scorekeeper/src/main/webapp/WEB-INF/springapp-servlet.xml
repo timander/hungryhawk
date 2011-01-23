@@ -3,34 +3,34 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <!-- the application context definition for the springapp DispatcherServlet -->
+  <!-- the application context definition for the springapp DispatcherServlet -->
 
-    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-        <property name="basename" value="messages"/>
-    </bean>
-
-  <bean name="/hello.htm" class="net.timandersen.InventoryController">
-  <property name="productManager" ref="productManager"/>
+  <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+    <property name="basename" value="messages"/>
   </bean>
 
-    <bean name="/priceincrease.htm" class="net.timandersen.PriceIncreaseFormController">
-        <property name="sessionForm" value="true"/>
-        <property name="commandName" value="priceIncrease"/>
-      <property name="commandClass" value="net.timandersen.service.PriceIncrease"/>
-      <property name="validator">
-          <bean class="net.timandersen.service.PriceIncreaseValidator"/>
-        </property>
-        <property name="formView" value="priceincrease"/>
-        <property name="successView" value="hello.htm"/>
-        <property name="productManager" ref="productManager"/>
-    </bean>
+  <bean name="/hello.htm" class="net.timandersen.web.InventoryController">
+    <property name="productManager" ref="productManager"/>
+  </bean>
 
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
-        <property name="prefix" value="/WEB-INF/jsp/"></property>
-        <property name="suffix" value=".jsp"></property>
-    </bean>
+  <bean name="/priceincrease.htm" class="net.timandersen.web.PriceIncreaseFormController">
+    <property name="sessionForm" value="true"/>
+    <property name="commandName" value="priceIncrease"/>
+    <property name="commandClass" value="net.timandersen.service.PriceIncrease"/>
+    <property name="validator">
+      <bean class="net.timandersen.service.PriceIncreaseValidator"/>
+    </property>
+    <property name="formView" value="priceincrease"/>
+    <property name="successView" value="hello.htm"/>
+    <property name="productManager" ref="productManager"/>
+  </bean>
+
+  <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+    <property name="prefix" value="/WEB-INF/jsp/"></property>
+    <property name="suffix" value=".jsp"></property>
+  </bean>
 
 </beans>

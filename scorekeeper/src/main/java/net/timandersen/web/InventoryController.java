@@ -1,4 +1,4 @@
-package net.timandersen;
+package net.timandersen.web;
 
 import net.timandersen.domain.ProductManager;
 import org.apache.commons.logging.Log;
