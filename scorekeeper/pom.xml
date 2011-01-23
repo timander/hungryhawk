@@ -11,7 +11,7 @@
 
   <properties>
     <spring.version>3.0.5.RELEASE</spring.version>
-    <mysql.driver.version>5.1.13</mysql.driver.version>
+    <!--<mysql.driver.version>5.1.13</mysql.driver.version>-->
   </properties>
 
   <dependencies>
@@ -57,12 +57,12 @@
       <version>1.2.2</version>
       <scope>runtime</scope>
     </dependency>
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>${mysql.driver.version}</version>
-      <scope>runtime</scope>
-    </dependency>
+    <!--<dependency>-->
+      <!--<groupId>mysql</groupId>-->
+      <!--<artifactId>mysql-connector-java</artifactId>-->
+      <!--<version>${mysql.driver.version}</version>-->
+      <!--<scope>runtime</scope>-->
+    <!--</dependency>-->
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
@@ -126,10 +126,15 @@
         <artifactId>sql-maven-plugin</artifactId>
         <version>1.4</version>
         <dependencies>
+          <!--<dependency>-->
+            <!--<groupId>mysql</groupId>-->
+            <!--<artifactId>mysql-connector-java</artifactId>-->
+            <!--<version>${mysql.driver.version}</version>-->
+          <!--</dependency>-->
           <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.driver.version}</version>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.2.141</version>
           </dependency>
         </dependencies>
         <configuration>
@@ -149,10 +154,14 @@
             </goals>
             <configuration>
               <!-- need another database to drop the targeted one -->
-              <url>jdbc:mysql://localhost:3306/bootstrapdb?autoreconnect=true</url>
+              <!--<url>jdbc:mysql://localhost:3306/bootstrapdb?autoreconnect=true</url>-->
+              <url>jdbc:h2:~/test</url>
+              <!--<sqlCommand>-->
+                <!--drop database customer_dev;-->
+                <!--create database customer_dev;-->
+              <!--</sqlCommand>-->
               <sqlCommand>
-                drop database customer_dev;
-                create database customer_dev;
+                drop all objects;
               </sqlCommand>
               <!-- ignore error when database is not available -->
               <onError>continue</onError>
