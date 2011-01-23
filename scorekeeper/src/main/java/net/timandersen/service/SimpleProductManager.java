@@ -2,32 +2,31 @@ package net.timandersen.service;
 
 import net.timandersen.domain.Product;
 import net.timandersen.domain.ProductManager;
-import net.timandersen.repository.ProductDao;
+import net.timandersen.repository.ProductRepository;
 
 import java.util.List;
 
 public class SimpleProductManager implements ProductManager {
 
-  private ProductDao productDao;
+  private ProductRepository repository;
 
   public List<Product> getProducts() {
-    return productDao.getProductList();
+    return repository.findAll();
   }
 
   public void increasePrice(int percentage) {
-    List<Product> products = productDao.getProductList();
+    List<Product> products = repository.findAll();
     if (products != null) {
       for (Product product : products) {
-        double newPrice = product.getPrice().doubleValue() *
-          (100 + percentage) / 100;
+        double newPrice = product.getPrice().doubleValue() * (100 + percentage) / 100;
         product.setPrice(newPrice);
-        productDao.saveProduct(product);
+        repository.save(product);
       }
     }
   }
 
-  public void setProductDao(ProductDao productDao) {
-    this.productDao = productDao;
+  public void setRepository(ProductRepository repository) {
+    this.repository = repository;
   }
 
 }

@@ -1,12 +1,15 @@
 package net.timandersen.domain;
 
 import junit.framework.TestCase;
-import net.timandersen.repository.InMemoryProductDao;
-import net.timandersen.repository.ProductDao;
+import net.timandersen.repository.ProductRepository;
 import net.timandersen.service.SimpleProductManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class SimpleProductManagerTest extends TestCase {
 
@@ -23,34 +26,25 @@ public class SimpleProductManagerTest extends TestCase {
   private static Double TABLE_PRICE = new Double(150.10);
 
   private static int POSITIVE_PRICE_INCREASE = 10;
+  private ProductRepository productRepository;
 
   protected void setUp() throws Exception {
+    products = Arrays.asList(
+      createProduct("Chair", CHAIR_PRICE),
+      createProduct("Table", TABLE_PRICE));
+    productRepository = mock(ProductRepository.class);
     productManager = new SimpleProductManager();
-    products = new ArrayList<Product>();
-
-    // stub up a list of products
-    Product product = new Product();
-    product.setDescription("Chair");
-    product.setPrice(CHAIR_PRICE);
-    products.add(product);
-
-    product = new Product();
-    product.setDescription("Table");
-    product.setPrice(TABLE_PRICE);
-    products.add(product);
-
-    ProductDao productDao = new InMemoryProductDao(products);
-    productManager.setProductDao(productDao);
-    //productManager.setProducts(products);
+    productManager.setRepository(productRepository);
   }
 
   public void testGetProductsWithNoProducts() {
-    productManager = new SimpleProductManager();
-    productManager.setProductDao(new InMemoryProductDao(null));
+    when(productRepository.findAll()).thenReturn(null);
     assertNull(productManager.getProducts());
   }
 
   public void testGetProducts() {
+    when(productRepository.findAll()).thenReturn(products);
+
     List<Product> products = productManager.getProducts();
     assertNotNull(products);
     assertEquals(PRODUCT_COUNT, productManager.getProducts().size());
@@ -65,9 +59,8 @@ public class SimpleProductManagerTest extends TestCase {
   }
 
   public void testIncreasePriceWithNullListOfProducts() {
+    when(productRepository.findAll()).thenReturn(products);
     try {
-      productManager = new SimpleProductManager();
-      productManager.setProductDao(new InMemoryProductDao(null));
       productManager.increasePrice(POSITIVE_PRICE_INCREASE);
     } catch (NullPointerException ex) {
       fail("Products list is null.");
@@ -75,10 +68,8 @@ public class SimpleProductManagerTest extends TestCase {
   }
 
   public void testIncreasePriceWithEmptyListOfProducts() {
+    when(productRepository.findAll()).thenReturn(new ArrayList<Product>());
     try {
-      productManager = new SimpleProductManager();
-      productManager.setProductDao(new InMemoryProductDao(new ArrayList<Product>()));
-      //productManager.setProducts(new ArrayList<Product>());
       productManager.increasePrice(POSITIVE_PRICE_INCREASE);
     } catch (Exception ex) {
       fail("Products list is empty.");
@@ -86,6 +77,7 @@ public class SimpleProductManagerTest extends TestCase {
   }
 
   public void testIncreasePriceWithPositivePercentage() {
+    when(productRepository.findAll()).thenReturn(products);
     productManager.increasePrice(POSITIVE_PRICE_INCREASE);
     double expectedChairPriceWithIncrease = 22.55;
     double expectedTablePriceWithIncrease = 165.11;
@@ -96,6 +88,13 @@ public class SimpleProductManagerTest extends TestCase {
 
     product = products.get(1);
     assertEquals(expectedTablePriceWithIncrease, product.getPrice());
+  }
+
+  private Product createProduct(String description, Double price) {
+    Product product = new Product();
+    product.setDescription(description);
+    product.setPrice(price);
+    return product;
   }
 
 }

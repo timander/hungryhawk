@@ -4,16 +4,15 @@ import java.io.Serializable;
 
 public class Product implements Serializable {
 
-
-  private int id;
+  private Long id;
   private String description;
   private Double price;
 
-  public void setId(int i) {
+  public void setId(Long i) {
     id = i;
   }
 
-  public int getId() {
+  public Long getId() {
     return id;
   }
 
