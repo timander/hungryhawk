@@ -1,17 +1,22 @@
 package net.timandersen;
 
 import junit.framework.TestCase;
+import net.timandersen.domain.Product;
+import net.timandersen.repository.InMemoryProductDao;
 import net.timandersen.service.SimpleProductManager;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.Map;
-
 
 public class InventoryControllerTest extends TestCase {
 
   public void testHandleRequestView() throws Exception {
     InventoryController controller = new InventoryController();
-    controller.setProductManager(new SimpleProductManager());
+    SimpleProductManager spm = new SimpleProductManager();
+    spm.setProductDao(new InMemoryProductDao(new ArrayList<Product>()));
+    controller.setProductManager(spm);
+    //controller.setProductManager(new SimpleProductManager());
     ModelAndView modelAndView = controller.handleRequest(null, null);
     assertEquals("hello", modelAndView.getViewName());
     assertNotNull(modelAndView.getModel());
