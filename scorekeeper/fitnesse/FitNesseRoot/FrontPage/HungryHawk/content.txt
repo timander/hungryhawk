@@ -1,0 +1,24 @@
+!contents -R2 -g -p -f -h
+
+!|net.timandersen.hungryhawk.fixtures.ScaffoldingDoFixture|
+
+!define restaurant {|name|Deep Dish Pizza|
+|date|02/04/2010|
+}
+
+|Lisa|
+|plans a restaurant|${restaurant}|
+
+|Vicki|
+|makes a reservation for|4|people|
+
+|Hannah|
+|reviews reservations|
+|sends confirmations|
+
+|Vicki|
+|receives confirmation|
+
+!path ../target/test-classes
+!path ../target/classes
+!path ../target/dependency/*

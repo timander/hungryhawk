@@ -11,6 +11,9 @@
 
   <properties>
     <spring.version>3.0.5.RELEASE</spring.version>
+    <fitnesse.version>20100103</fitnesse.version>
+    <trinidad.version>20100103</trinidad.version>
+    <fitlibrary.version>20090628</fitlibrary.version>
   </properties>
 
   <dependencies>
@@ -76,18 +79,36 @@
       <artifactId>slf4j-log4j12</artifactId>
       <version>1.5.8</version>
     </dependency>
-  <dependency>
-    <groupId>junit</groupId>
-    <artifactId>junit</artifactId>
-    <version>4.7</version>
-    <scope>test</scope>
-  </dependency>
-  <dependency>
-    <groupId>org.mockito</groupId>
-    <artifactId>mockito-all</artifactId>
-    <version>1.8.5</version>
-    <scope>test</scope>
-  </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.7</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>1.8.5</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.fitnesse</groupId>
+      <artifactId>fitnesse</artifactId>
+      <version>${fitnesse.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.fitnesse</groupId>
+      <artifactId>fitlibrary</artifactId>
+      <version>${fitlibrary.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-trinidad-plugin</artifactId>
+      <version>${trinidad.version}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -206,6 +227,43 @@
             <goals>
               <goal>stop</goal>
             </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <!--used to put jar files in path for fitnesse-->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.0</version>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-trinidad-plugin</artifactId>
+        <version>${trinidad.version}</version>
+        <configuration>
+          <breakBuildOnFailure>true</breakBuildOnFailure>
+          <resultRepositoryUri>${project.build.directory}/fitnesse</resultRepositoryUri>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>run-tests</goal>
+            </goals>
+            <configuration>
+              <testRepositoryUri>${basedir}/fitnesse</testRepositoryUri>
+              <suites>
+                <suite>FrontPage.HungryHawk</suite>
+              </suites>
+            </configuration>
           </execution>
         </executions>
       </plugin>
