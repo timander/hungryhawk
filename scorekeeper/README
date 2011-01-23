@@ -1,0 +1,11 @@
+
+GETTING STARTED:
+------------------------------------
+MySQL commands
+------------------------------------
+mysql -u root -p
+create database bootstrapdb;
+create database customer_dev;
+grant all on bootstrapdb.* to admin@localhost identified by 'p@ssw0rd';
+grant all on customer_dev.* to admin@localhost identified by 'p@ssw0rd';
+exit
