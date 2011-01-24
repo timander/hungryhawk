@@ -1,6 +1,13 @@
-CREATE TABLE products (
-  id INTEGER NOT NULL PRIMARY KEY,
+create table products (
+  id integer identity,
   description varchar(255),
   price decimal(15,2)
 );
-CREATE INDEX products_description ON products(description);
+create index products_description on products(description);
+
+create table events (
+  id integer identity,
+  name varchar(255),
+  eventDate date
+);
+create index events_description on products(description);

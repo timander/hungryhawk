@@ -13,9 +13,13 @@ public class SpringContextWrapper {
   }
 
 
-  private SpringContextWrapper() {
+  public static <T> T getBean(Class<T> beanClass) {
+    return getSpringContext().getBean(beanClass);
   }
 
+
+  private SpringContextWrapper() {
+  }
 
   public static synchronized ApplicationContext getSpringContext() {
     if (springContext == null) {
