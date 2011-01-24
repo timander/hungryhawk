@@ -3,10 +3,10 @@
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.timandersen</groupId>
-  <artifactId>scorekeeper</artifactId>
+  <artifactId>hungryhawk</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>scorekeeper Maven Webapp</name>
+  <name>hungryhawk Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -112,7 +112,7 @@
   </dependencies>
 
   <build>
-    <finalName>scorekeeper</finalName>
+    <finalName>hungryhawk</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
