@@ -1,6 +1,6 @@
 package net.timandersen.repository;
 
-import net.timandersen.domain.Event;
+import net.timandersen.model.domain.Event;
 
 public class EventRepository extends GenericDao<Event> {
 

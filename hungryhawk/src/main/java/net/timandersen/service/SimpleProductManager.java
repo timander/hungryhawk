@@ -1,7 +1,6 @@
 package net.timandersen.service;
 
-import net.timandersen.domain.Product;
-import net.timandersen.domain.ProductManager;
+import net.timandersen.model.domain.Product;
 import net.timandersen.repository.ProductRepository;
 
 import java.util.List;

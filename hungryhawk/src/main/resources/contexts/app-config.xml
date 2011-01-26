@@ -1,18 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-           http://www.springframework.org/schema/aop
-           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-           http://www.springframework.org/schema/tx
-           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd ">
+
+  <!--<mvc:annotation-driven />-->
+
+  <!--<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">-->
+    <!--<property name="order" value="0"/>-->
+  <!--</bean>-->
+
+  <!--<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>-->
+
+  <!--&lt;!&ndash; Maps request paths to @Controller classes; e.g. a path of /home looks for a controller named HomeController &ndash;&gt;-->
+  <!--<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">-->
+    <!--<property name="order" value="1" />-->
+    <!--<property name="defaultHandler">-->
+      <!--&lt;!&ndash; If no @Controller match, map path to a view to render; e.g. the "/intro" path would map to the view named "intro" &ndash;&gt;-->
+      <!--<bean class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />-->
+    <!--</property>-->
+  <!--</bean>-->
+
+  <!-- Scans within the base package of the application for @Components to configure as beans -->
+  <!--<context:component-scan base-package="net.timandersen"/>-->
+
+  <!--<bean id="eventController" class="net.timandersen.web.EventController">-->
+    <!--<property name="repository" ref="eventRepository"/>-->
+  <!--</bean>-->
+
+  <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
+
+  <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+    <property name="mappings">
+      <props>
+        <prop key="reservations.do">reservationConroller</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="reservationConroller" class="net.timandersen.web.ReservationController"/>
 
   <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-      <property name="location" value="classpath:config.properties"/>
+    <property name="location" value="classpath:config.properties"/>
   </bean>
 
   <bean id="productManager" class="net.timandersen.service.SimpleProductManager">
@@ -27,30 +62,76 @@
   </bean>
 
   <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-      <property name="dataSource" ref="dataSource"/>
-      <property name="mappingLocations">
-          <list>
-              <value>classpath*:hibernate/*.hbm.xml</value>
-          </list>
-      </property>
-      <property name="hibernateProperties">
-          <props>
-              <!--<prop key="hibernate.show_sql">true</prop>-->
-          </props>
-      </property>
+    <property name="dataSource" ref="dataSource"/>
+    <property name="mappingLocations">
+      <list>
+        <value>classpath*:hibernate/*.hbm.xml</value>
+      </list>
+    </property>
+    <property name="hibernateProperties">
+      <props>
+        <!--<prop key="hibernate.show_sql">true</prop>-->
+      </props>
+    </property>
+  </bean>
+
+  <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+    <property name="sessionFactory" ref="sessionFactory"/>
   </bean>
 
   <bean id="productRepository" class="net.timandersen.repository.ProductRepository">
-      <property name="sessionFactory" ref="sessionFactory"/>
+    <property name="sessionFactory" ref="sessionFactory"/>
   </bean>
 
   <bean id="eventRepository" class="net.timandersen.repository.EventRepository">
-      <property name="sessionFactory" ref="sessionFactory"/>
+    <property name="sessionFactory" ref="sessionFactory"/>
   </bean>
 
-  <bean id="transactionManager"
-        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+
+  <tx:annotation-driven transaction-manager="txManager" proxy-target-class="false"/>
+
+  <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     <property name="dataSource" ref="dataSource"/>
   </bean>
+
+  <!-- for jdbc -->
+  <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource"/>
+  </bean>
+
+
+
+  <!--servlet stuff-->
+
+  <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+    <property name="basename" value="messages"/>
+  </bean>
+
+  <bean name="/hello.htm" class="net.timandersen.web.InventoryController">
+    <property name="productManager" ref="productManager"/>
+  </bean>
+
+  <bean name="/priceincrease.htm" class="net.timandersen.web.PriceIncreaseFormController">
+    <property name="sessionForm" value="true"/>
+    <property name="commandName" value="priceIncrease"/>
+    <property name="commandClass" value="net.timandersen.service.PriceIncrease"/>
+    <property name="validator">
+      <bean class="net.timandersen.service.PriceIncreaseValidator"/>
+    </property>
+    <property name="formView" value="priceincrease"/>
+    <property name="successView" value="hello.htm"/>
+    <property name="productManager" ref="productManager"/>
+  </bean>
+
+  <!--<bean name="/events.htm" class="net.timandersen.web.EventController">-->
+    <!--<property name="repository" ref="eventRepository"/>-->
+  <!--</bean>-->
+
+  <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+    <property name="prefix" value="/WEB-INF/jsp/"></property>
+    <property name="suffix" value=".jsp"></property>
+  </bean>
+  
 
 </beans>

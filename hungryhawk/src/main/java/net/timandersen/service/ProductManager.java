@@ -1,4 +1,6 @@
-package net.timandersen.domain;
+package net.timandersen.service;
+
+import net.timandersen.model.domain.Product;
 
 import java.util.List;
 

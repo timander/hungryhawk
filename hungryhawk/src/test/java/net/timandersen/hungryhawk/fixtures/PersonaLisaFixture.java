@@ -1,7 +1,7 @@
 package net.timandersen.hungryhawk.fixtures;
 
 import fitlibrary.DoFixture;
-import net.timandersen.domain.Event;
+import net.timandersen.model.domain.Event;
 import net.timandersen.repository.EventRepository;
 import net.timandersen.util.SpringContextWrapper;
 

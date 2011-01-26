@@ -1,6 +1,6 @@
 package net.timandersen.web;
 
-import net.timandersen.domain.ProductManager;
+import net.timandersen.service.ProductManager;
 import net.timandersen.service.PriceIncrease;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

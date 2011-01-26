@@ -1,35 +1,44 @@
 package net.timandersen.web;
 
-import net.timandersen.domain.Event;
+import net.timandersen.model.form.EventEntryForm;
+import net.timandersen.model.view.EventView;
 import net.timandersen.repository.EventRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
 @Controller
-@RequestMapping("/events")
 public class EventController {
 
+  @Autowired
   private EventRepository repository;
 
-  @RequestMapping(method = RequestMethod.GET)
-  public List<Event> getAll() {
-    return repository.findAll();
+  public EventController() {
+    System.out.println("EventController.EventController");
   }
 
-  @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-  @ResponseBody
-  public Event getEvent(@PathVariable("id") Long eventId) {
-    return repository.findById(eventId);
+  // url = /hungryhawk/events
+  @RequestMapping(value = "/events", method = RequestMethod.GET)
+  public String showAllEvents(ModelMap model) {
+    System.out.println("EventController.showAllEvents");
+    List<EventView> events = EventView.createListFrom(repository.findAll());
+    EventEntryForm form = new EventEntryForm();
+    form.setEvents(events);
+    model.addAttribute("eventEntryForm", form);
+    return "listevents";
   }
 
-  @RequestMapping(method = RequestMethod.POST)
-  public View saveEvent(@RequestBody Event event) {
-    repository.save(event);
-    return new RedirectView("/events/" + event.getId());
+  // url = /hungryhawk/events/add
+  @RequestMapping(value = "/events/add", method = RequestMethod.GET)
+  public String showAddUser(ModelMap model) {
+    System.out.println("EventController.showAddUser");
+    EventView form = new EventView();
+    model.addAttribute("eventView", form);
+    return "addevent";
   }
 
   public void setRepository(EventRepository repository) {

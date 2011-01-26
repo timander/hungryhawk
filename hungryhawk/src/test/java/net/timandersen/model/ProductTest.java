@@ -1,6 +1,7 @@
-package net.timandersen.domain;
+package net.timandersen.model;
 
 import junit.framework.TestCase;
+import net.timandersen.model.domain.Product;
 
 public class ProductTest extends TestCase {
 

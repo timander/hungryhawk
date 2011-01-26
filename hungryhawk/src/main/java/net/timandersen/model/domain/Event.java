@@ -1,4 +1,4 @@
-package net.timandersen.domain;
+package net.timandersen.model.domain;
 
 import java.io.Serializable;
 import java.util.Date;
