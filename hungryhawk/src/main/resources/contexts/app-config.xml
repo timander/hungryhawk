@@ -13,25 +13,25 @@
   <!--<mvc:annotation-driven />-->
 
   <!--<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">-->
-    <!--<property name="order" value="0"/>-->
+  <!--<property name="order" value="0"/>-->
   <!--</bean>-->
 
   <!--<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>-->
 
   <!--&lt;!&ndash; Maps request paths to @Controller classes; e.g. a path of /home looks for a controller named HomeController &ndash;&gt;-->
   <!--<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">-->
-    <!--<property name="order" value="1" />-->
-    <!--<property name="defaultHandler">-->
-      <!--&lt;!&ndash; If no @Controller match, map path to a view to render; e.g. the "/intro" path would map to the view named "intro" &ndash;&gt;-->
-      <!--<bean class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />-->
-    <!--</property>-->
+  <!--<property name="order" value="1" />-->
+  <!--<property name="defaultHandler">-->
+  <!--&lt;!&ndash; If no @Controller match, map path to a view to render; e.g. the "/intro" path would map to the view named "intro" &ndash;&gt;-->
+  <!--<bean class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />-->
+  <!--</property>-->
   <!--</bean>-->
 
   <!-- Scans within the base package of the application for @Components to configure as beans -->
   <!--<context:component-scan base-package="net.timandersen"/>-->
 
   <!--<bean id="eventController" class="net.timandersen.web.EventController">-->
-    <!--<property name="repository" ref="eventRepository"/>-->
+  <!--<property name="repository" ref="eventRepository"/>-->
   <!--</bean>-->
 
   <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
@@ -44,7 +44,9 @@
     </property>
   </bean>
 
-  <bean id="reservationConroller" class="net.timandersen.web.ReservationController"/>
+  <bean id="reservationConroller" class="net.timandersen.web.ReservationController">
+    <property name="repository" ref="reservationRepository"/>
+  </bean>
 
   <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="location" value="classpath:config.properties"/>
@@ -87,6 +89,9 @@
     <property name="sessionFactory" ref="sessionFactory"/>
   </bean>
 
+  <bean id="reservationRepository" class="net.timandersen.repository.ReservationRepository">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
 
   <tx:annotation-driven transaction-manager="txManager" proxy-target-class="false"/>
 
@@ -98,7 +103,6 @@
   <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
     <property name="dataSource" ref="dataSource"/>
   </bean>
-
 
 
   <!--servlet stuff-->
@@ -124,7 +128,7 @@
   </bean>
 
   <!--<bean name="/events.htm" class="net.timandersen.web.EventController">-->
-    <!--<property name="repository" ref="eventRepository"/>-->
+  <!--<property name="repository" ref="eventRepository"/>-->
   <!--</bean>-->
 
   <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -132,6 +136,6 @@
     <property name="prefix" value="/WEB-INF/jsp/"></property>
     <property name="suffix" value=".jsp"></property>
   </bean>
-  
+
 
 </beans>
