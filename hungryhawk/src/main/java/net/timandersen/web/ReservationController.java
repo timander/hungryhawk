@@ -12,8 +12,10 @@ public class ReservationController implements Controller {
   private ReservationRepository repository;
 
   @Override
-  public ModelAndView handleRequest(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
+  public ModelAndView handleRequest(HttpServletRequest request,
+                                    HttpServletResponse response) throws Exception {
     System.out.println("ReservationController.handleRequest");
+
     ModelAndView modelAndView = new ModelAndView("reservations");
     modelAndView.addObject("reservations", repository.findAll());
     return modelAndView;

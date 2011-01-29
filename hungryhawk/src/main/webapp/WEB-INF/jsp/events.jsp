@@ -4,13 +4,13 @@
   <head><title><fmt:message key="title"/></title></head>
   <body>
     <h1><fmt:message key="heading"/></h1>
-    <p><fmt:message key="greeting"/> <c:out value="${model.now}"/></p>
+    <p><fmt:message key="greeting"/></p>
     <h3>Events</h3>
-    <c:forEach items="${model.events}" var="event">
+    <c:forEach items="${events}" var="event">
       <c:out value="${event.name}"/> <i><c:out value="${event.date}"/></i><br><br>
     </c:forEach>
     <br>
-    <a href="<c:url value="priceincrease.htm"/>">Increase Prices</a>
+    <a href="<c:url value="addEvent.do"/>">Add Event</a>
     <br>
   </body>
 </html>

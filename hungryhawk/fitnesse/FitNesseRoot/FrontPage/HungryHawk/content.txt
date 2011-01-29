@@ -1,6 +1,6 @@
 !contents -R2 -g -p -f -h
 
-!|net.timandersen.hungryhawk.fixtures.ScaffoldingDoFixture|
+!|net.timandersen.hungryhawk.fixtures.HungryHawkDoFixture|
 
 !define restaurant {|name|Deep Dish Pizza|
 |date|02/04/2010|
