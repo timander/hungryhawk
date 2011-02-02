@@ -1,6 +1,6 @@
 package net.timandersen.web;
 
-import net.timandersen.repository.ReservationRepository;
+import net.timandersen.repository.ReservationDao;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ReservationController implements Controller {
 
-  private ReservationRepository repository;
+  private ReservationDao dao;
 
   @Override
   public ModelAndView handleRequest(HttpServletRequest request,
@@ -17,12 +17,12 @@ public class ReservationController implements Controller {
     System.out.println("ReservationController.handleRequest");
 
     ModelAndView modelAndView = new ModelAndView("reservations");
-    modelAndView.addObject("reservations", repository.findAll());
+    modelAndView.addObject("reservations", dao.findAll());
     return modelAndView;
   }
 
-  public void setRepository(ReservationRepository repository) {
-    this.repository = repository;
+  public void setDao(ReservationDao dao) {
+    this.dao = dao;
   }
 
 }

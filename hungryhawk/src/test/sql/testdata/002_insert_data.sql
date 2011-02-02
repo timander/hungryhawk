@@ -1,3 +1,2 @@
-INSERT INTO products (id, description, price) values(1, 'Lamp', 5.78);
-INSERT INTO products (id, description, price) values(2, 'Table', 75.29);
-INSERT INTO products (id, description, price) values(3, 'Chair', 22.81);
+INSERT INTO events (id, name, eventDate) values(1, 'French Dip', '2011-01-01');
+INSERT INTO reservations (id, name, guests, eventId) values(1, 'Sara', 2, null);

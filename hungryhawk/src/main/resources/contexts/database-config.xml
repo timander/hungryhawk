@@ -35,15 +35,11 @@
     <property name="sessionFactory" ref="sessionFactory"/>
   </bean>
 
-  <bean id="productRepository" class="net.timandersen.repository.ProductRepository">
+  <bean id="eventDao" class="net.timandersen.repository.EventDao">
     <property name="sessionFactory" ref="sessionFactory"/>
   </bean>
 
-  <bean id="eventRepository" class="net.timandersen.repository.EventRepository">
-    <property name="sessionFactory" ref="sessionFactory"/>
-  </bean>
-
-  <bean id="reservationRepository" class="net.timandersen.repository.ReservationRepository">
+  <bean id="reservationDao" class="net.timandersen.repository.ReservationDao">
     <property name="sessionFactory" ref="sessionFactory"/>
   </bean>
 

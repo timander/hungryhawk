@@ -1,7 +1,7 @@
 package net.timandersen.hungryhawk.fixtures;
 
 import fitlibrary.DoFixture;
-import net.timandersen.repository.EventRepository;
+import net.timandersen.repository.EventDao;
 import net.timandersen.util.SpringContextWrapper;
 import net.timandersen.web.EventController;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -19,8 +19,8 @@ public class PersonaLisaFixture extends DoFixture {
     return repository().findByName(fields.get("name")) != null;
   }
 
-  private EventRepository repository() {
-    return SpringContextWrapper.getBean(EventRepository.class);
+  private EventDao repository() {
+    return SpringContextWrapper.getBean(EventDao.class);
   }
 
 }

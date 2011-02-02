@@ -2,8 +2,8 @@ package net.timandersen.hungryhawk.fixtures;
 
 import fit.Fixture;
 import fitlibrary.DoFixture;
-import net.timandersen.repository.EventRepository;
-import net.timandersen.repository.ReservationRepository;
+import net.timandersen.repository.EventDao;
+import net.timandersen.repository.ReservationDao;
 import net.timandersen.util.SpringContextWrapper;
 
 public class HungryHawkDoFixture extends DoFixture {
@@ -25,12 +25,12 @@ public class HungryHawkDoFixture extends DoFixture {
     return new PersonaHannaFixture();
   }
 
-  private EventRepository eventRepository() {
-    return SpringContextWrapper.getBean(EventRepository.class);
+  private EventDao eventRepository() {
+    return SpringContextWrapper.getBean(EventDao.class);
   }
 
-  private ReservationRepository reservationRepository() {
-    return SpringContextWrapper.getBean(ReservationRepository.class);
+  private ReservationDao reservationRepository() {
+    return SpringContextWrapper.getBean(ReservationDao.class);
   }
 
 }

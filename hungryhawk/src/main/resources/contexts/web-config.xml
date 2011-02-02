@@ -22,37 +22,17 @@
   </bean>
 
   <bean id="eventConroller" class="net.timandersen.web.EventController">
-    <property name="repository" ref="eventRepository"/>
+    <property name="dao" ref="eventDao"/>
   </bean>
 
   <bean id="reservationConroller" class="net.timandersen.web.ReservationController">
-    <property name="repository" ref="reservationRepository"/>
-  </bean>
-
-  <bean id="productManager" class="net.timandersen.service.SimpleProductManager">
-    <property name="repository" ref="productRepository"/>
+    <property name="dao" ref="reservationDao"/>
   </bean>
 
   <!--servlet stuff-->
 
   <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
     <property name="basename" value="messages"/>
-  </bean>
-
-  <bean name="/hello.htm" class="net.timandersen.web.InventoryController">
-    <property name="productManager" ref="productManager"/>
-  </bean>
-
-  <bean name="/priceincrease.htm" class="net.timandersen.web.PriceIncreaseFormController">
-    <property name="sessionForm" value="true"/>
-    <property name="commandName" value="priceIncrease"/>
-    <property name="commandClass" value="net.timandersen.service.PriceIncrease"/>
-    <property name="validator">
-      <bean class="net.timandersen.service.PriceIncreaseValidator"/>
-    </property>
-    <property name="formView" value="priceincrease"/>
-    <property name="successView" value="hello.htm"/>
-    <property name="productManager" ref="productManager"/>
   </bean>
 
   <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
