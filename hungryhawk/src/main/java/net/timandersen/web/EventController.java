@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class EventController implements Controller {
 
-  private EventDao dao;
+  private EventDao eventDao;
 
   @Override
   public ModelAndView handleRequest(HttpServletRequest request,
@@ -21,7 +21,7 @@ public class EventController implements Controller {
     if ("save".equals(request.getParameter("action"))) {
       String name = request.getParameter("name");
       Date date = new Date(request.getParameter("date"));
-      dao.save(new Event(name, date));
+      eventDao.save(new Event(name, date));
     }
 
     if ("add".equals(request.getParameter("action"))) {
@@ -31,12 +31,12 @@ public class EventController implements Controller {
     }
 
     ModelAndView modelAndView = new ModelAndView("events/list");
-    modelAndView.addObject("events", dao.findAll());
+    modelAndView.addObject("events", eventDao.findAll());
     return modelAndView;
   }
 
-  public void setDao(EventDao dao) {
-    this.dao = dao;
+  public void setEventDao(EventDao eventDao) {
+    this.eventDao = eventDao;
   }
 
 }

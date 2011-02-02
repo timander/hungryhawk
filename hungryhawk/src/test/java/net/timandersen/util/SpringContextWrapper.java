@@ -23,7 +23,7 @@ public class SpringContextWrapper {
 
   public static synchronized ApplicationContext getSpringContext() {
     if (springContext == null) {
-      springContext = new ClassPathXmlApplicationContext("contexts/app-config.xml");
+      springContext = new ClassPathXmlApplicationContext("contexts/application-context.xml");
     }
     return springContext;
   }

@@ -17,14 +17,14 @@
       <props>
         <prop key="events">eventConroller</prop>
         <prop key="events/add">eventConroller</prop>
-        <prop key="reservations">addReservationConroller</prop>
+        <prop key="reservations">reservationConroller</prop>
         <prop key="reservations/add">reservationConroller</prop>
       </props>
     </property>
   </bean>
 
   <bean id="eventConroller" class="net.timandersen.web.EventController">
-    <property name="dao" ref="eventDao"/>
+    <property name="eventDao" ref="eventDao"/>
   </bean>
 
   <bean id="reservationConroller" class="net.timandersen.web.ReservationController">
