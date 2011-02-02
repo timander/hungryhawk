@@ -15,8 +15,9 @@
   <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
     <property name="mappings">
       <props>
-        <prop key="events.do">eventConroller</prop>
-        <prop key="reservations.do">reservationConroller</prop>
+        <prop key="events">eventConroller</prop>
+        <prop key="events/add">eventConroller</prop>
+        <prop key="reservations">reservationConroller</prop>
       </props>
     </property>
   </bean>
@@ -35,7 +36,7 @@
     <property name="basename" value="messages"/>
   </bean>
 
-  <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+  <bean id="viewResolver" class="net.timandersen.web.HungryHawkViewResolver">
     <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
     <property name="prefix" value="/WEB-INF/jsp/"></property>
     <property name="suffix" value=".jsp"></property>

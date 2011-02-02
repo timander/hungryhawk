@@ -17,11 +17,19 @@ public class PersonaLisaFixture extends DoFixture {
     MockHttpServletRequest request = new MockHttpServletRequest();
     request.addParameters(fields);
     request.addParameter("action", "save");
-    SpringContextWrapper.getBean(EventController.class).handleRequest(request, new MockHttpServletResponse());
+    controller().handleRequest(request, new MockHttpServletResponse());
     return dao().findByName(fields.get("name")) != null;
   }
 
-  public List<Event> reviewsScheduleOfEvents() {
+  private EventController controller() {
+    return SpringContextWrapper.getBean(EventController.class);
+  }
+
+  public List<Event> reviewsScheduleOfEvents() throws Exception {
+    MockHttpServletResponse response = new MockHttpServletResponse();
+    controller().handleRequest(new MockHttpServletRequest(), response);
+    String s = response.getContentAsString();
+    System.out.println("s = " + s);
     return dao().findAll();
   }
 

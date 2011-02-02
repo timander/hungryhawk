@@ -4,6 +4,6 @@
 <!-- c:redirect url="/hello.htm"/ -->
 
 <p>
-  <a href="<c:url value="events.do"/>">Events</a><br>
-  <a href="<c:url value="reservations.do"/>">Reservations</a>
+  <a href="<c:url value="restaurant/events"/>">Events</a><br>
+  <a href="<c:url value="restaurant/reservations"/>">Reservations</a>
 </p>

@@ -24,7 +24,13 @@ public class EventController implements Controller {
       dao.save(new Event(name, date));
     }
 
-    ModelAndView modelAndView = new ModelAndView("events");
+    if ("add".equals(request.getParameter("action"))) {
+      ModelAndView modelAndView = new ModelAndView("events/add");
+      modelAndView.addObject("event", new Event());
+      return modelAndView;
+    }
+
+    ModelAndView modelAndView = new ModelAndView("events/list");
     modelAndView.addObject("events", dao.findAll());
     return modelAndView;
   }

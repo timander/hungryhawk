@@ -16,7 +16,7 @@ public class ReservationController implements Controller {
                                     HttpServletResponse response) throws Exception {
     System.out.println("ReservationController.handleRequest");
 
-    ModelAndView modelAndView = new ModelAndView("reservations");
+    ModelAndView modelAndView = new ModelAndView("reservations/list");
     modelAndView.addObject("reservations", dao.findAll());
     return modelAndView;
   }
