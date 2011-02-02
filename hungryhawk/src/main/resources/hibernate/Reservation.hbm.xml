@@ -12,7 +12,8 @@
 
     <property name="guests" column="guests"/>
 
-    <property name="Event" column="eventId"/>
+    <many-to-one name="event" column="EventId" class="net.timandersen.model.domain.Event"/>
 
   </class>
+
 </hibernate-mapping>
