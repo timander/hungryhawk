@@ -1,23 +1,8 @@
 !contents -R2 -g -p -f -h
 
-!|net.timandersen.hungryhawk.fixtures.HungryHawkDoFixture|
-
-!define restaurant {|name|Deep Dish Pizza|
-|date|02/04/2010|
-}
-
-|Lisa|
-|plans a restaurant|${restaurant}|
-
-|Vicki|
-|makes a reservation for|4|people|
-
-|Hannah|
-|reviews reservations|
-|sends confirmations|
-
-|Vicki|
-|receives confirmation|
+!define today {!today (MM/dd/yyyy)}
+!define nextweek {!today (MM/dd/yyyy) +7}
+!define threeweeks {!today (MM/dd/yyyy) +21}
 
 !path ../target/test-classes
 !path ../target/classes

@@ -1,0 +1,15 @@
+!contents -R2 -g -p -f -h
+
+!|net.timandersen.hungryhawk.fixtures.HungryHawkDoFixture|
+
+!define restaurant (|name|Deep Dish Pizza|
+|date|${nextweek}|
+)
+
+|Lisa|
+|plans a restaurant|${restaurant}|
+
+|Lisa|
+|reviews schedule of events|
+|name|date|
+|Deep Dish Pizza|${nextweek}|

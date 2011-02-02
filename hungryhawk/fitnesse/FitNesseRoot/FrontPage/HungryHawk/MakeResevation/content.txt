@@ -1,0 +1,27 @@
+!contents -R2 -g -p -f -h
+
+!**> Setup 
+!|net.timandersen.hungryhawk.fixtures.HungryHawkDoFixture|
+
+!define restaurant (|name|BBQ Ribs|
+|date|${threeweeks}|
+)
+
+**!
+
+|Lisa|
+|plans a restaurant|${restaurant}|
+
+|Vicki|
+|makes a reservation for|${threeweeks}|with|4|guests|
+
+|Hannah|
+|reviews reservations for|${threeweeks}|
+|name|guests|
+|Vicki|4|
+
+|Hannah|
+|sends confirmations|
+
+|Vicki|
+|receives confirmation|
