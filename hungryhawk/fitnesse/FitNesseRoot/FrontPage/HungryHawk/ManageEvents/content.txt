@@ -1,15 +1,31 @@
-!contents -R2 -g -p -f -h
-
+!**> Setup
 !|net.timandersen.hungryhawk.fixtures.HungryHawkDoFixture|
 
-!define restaurant (|name|Deep Dish Pizza|
+!define pizza (|name|Deep Dish Pizza|
 |date|${nextweek}|
 )
 
+!define bbq (|name|BBQ Ribs|
+|date|${threeweeks}|
+)
+
+!define restaurants (|name|date|
+|Deep Dish Pizza|${nextweek}|
+|BBQ Ribs|${threeweeks}|
+)
+
+**!
+
 |Lisa|
-|plans a restaurant|${restaurant}|
+|plans a restaurant|${pizza}|
 
 |Lisa|
 |reviews schedule of events|
 |name|date|
 |Deep Dish Pizza|${nextweek}|
+
+|Lisa|
+|plans a restaurant|${bbq}|
+
+|Lisa|
+|check|reviews schedule of events|${restaurants}|

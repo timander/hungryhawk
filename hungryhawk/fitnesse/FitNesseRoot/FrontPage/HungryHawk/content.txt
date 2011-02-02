@@ -1,4 +1,4 @@
-!contents -R2 -g -p -f -h
+!1 !contents
 
 !define today {!today (MM/dd/yyyy)}
 !define nextweek {!today (MM/dd/yyyy) +7}
