@@ -6,6 +6,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class SpringContextWrapper {
 
   private static ApplicationContext springContext;
+  public static String contextConfigLocation = "contexts/application-context.xml";
 
 
   public static <T> T getBean(String beanName, Class<T> beanClass) {
@@ -17,13 +18,12 @@ public class SpringContextWrapper {
     return getSpringContext().getBean(beanClass);
   }
 
-
   private SpringContextWrapper() {
   }
 
   public static synchronized ApplicationContext getSpringContext() {
     if (springContext == null) {
-      springContext = new ClassPathXmlApplicationContext("contexts/application-context.xml");
+      springContext = new ClassPathXmlApplicationContext(contextConfigLocation);
     }
     return springContext;
   }

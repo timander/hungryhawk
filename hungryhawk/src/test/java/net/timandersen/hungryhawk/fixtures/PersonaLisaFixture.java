@@ -3,8 +3,10 @@ package net.timandersen.hungryhawk.fixtures;
 import fitlibrary.DoFixture;
 import net.timandersen.model.domain.Event;
 import net.timandersen.repository.EventDao;
+import net.timandersen.util.MockDispatcherServlet;
 import net.timandersen.util.SpringContextWrapper;
 import net.timandersen.web.EventController;
+import org.springframework.http.HttpMethod;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
@@ -17,7 +19,9 @@ public class PersonaLisaFixture extends DoFixture {
     MockHttpServletRequest request = new MockHttpServletRequest();
     request.addParameters(fields);
     request.addParameter("action", "save");
-    controller().handleRequest(request, new MockHttpServletResponse());
+    request.setRequestURI("/events/add");
+//    controller().handleRequest(request, new MockHttpServletResponse());
+    MockDispatcherServlet.handleRequest(request, HttpMethod.POST);
     return dao().findByName(fields.get("name")) != null;
   }
 
@@ -27,9 +31,8 @@ public class PersonaLisaFixture extends DoFixture {
 
   public List<Event> reviewsScheduleOfEvents() throws Exception {
     MockHttpServletResponse response = new MockHttpServletResponse();
-    controller().handleRequest(new MockHttpServletRequest(), response);
-    String s = response.getContentAsString();
-    System.out.println("s = " + s);
+//    controller().handleRequest(new MockHttpServletRequest(), response);
+    MockDispatcherServlet.handleRequest(new MockHttpServletRequest(), HttpMethod.GET);
     return dao().findAll();
   }
 
