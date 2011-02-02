@@ -23,6 +23,6 @@
       </c:forEach>
     </table>
     <br>
-    <a href="<c:url value="reservations/add"/>">Make Reservation</a>
+    <a href="<c:url value="add"/>">Make Reservation</a>
   </body>
 </html>

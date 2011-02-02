@@ -19,7 +19,7 @@
       </c:forEach>
     </table>
     <br>
-    <a href="<c:url value="events/add"/>">Add Event</a>
+    <a href="<c:url value="add"/>">Add Event</a>
     <br>
   </body>
 </html>
