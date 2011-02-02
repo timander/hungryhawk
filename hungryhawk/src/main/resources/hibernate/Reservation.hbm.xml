@@ -12,7 +12,7 @@
 
     <property name="guests" column="guests"/>
 
-    <many-to-one name="event" column="EventId" class="net.timandersen.model.domain.Event"/>
+    <many-to-one name="event" column="EventId" class="net.timandersen.model.domain.Event" lazy="false"/>
 
   </class>
 
