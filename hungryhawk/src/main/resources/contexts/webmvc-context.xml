@@ -16,7 +16,9 @@
     <property name="mappings">
       <props>
         <prop key="events">eventConroller</prop>
-        <prop key="events/add">eventConroller</prop>
+        <prop key="events/add">addEventConroller</prop>
+        <prop key="events/save">addEventConroller</prop>
+        <prop key="events/edit">addEventConroller</prop>
         <prop key="reservations">reservationConroller</prop>
         <prop key="reservations/add">reservationConroller</prop>
       </props>
@@ -24,6 +26,10 @@
   </bean>
 
   <bean id="eventConroller" class="net.timandersen.web.EventController">
+    <property name="eventDao" ref="eventDao"/>
+  </bean>
+
+  <bean id="addEventConroller" class="net.timandersen.web.AddEventController">
     <property name="eventDao" ref="eventDao"/>
   </bean>
 

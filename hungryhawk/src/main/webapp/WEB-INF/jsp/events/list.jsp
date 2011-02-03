@@ -3,8 +3,7 @@
 <html>
   <head><title><fmt:message key="title"/></title></head>
   <body>
-    <h1><fmt:message key="heading"/></h1>
-    <p><fmt:message key="greeting"/></p>
+    <h1>Showing Events</h1>
     <h3>Restaurant Schedule</h3>
     <table>
       <tr>
@@ -19,7 +18,7 @@
       </c:forEach>
     </table>
     <br>
-    <a href="<c:url value="add"/>">Add Event</a>
+    <a href="<c:url value="events/add"/>">Add Event</a>
     <br>
   </body>
 </html>

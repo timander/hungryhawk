@@ -14,4 +14,9 @@ public class EventDao extends GenericDao<Event> {
     return firstOrNull(getHibernateTemplate().find("from Event e where e.date = ?", date));
   }
 
+  @Override
+  public void save(Event entity) {
+    System.out.println("EventDao.save");
+    super.save(entity);
+  }
 }
