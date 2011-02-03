@@ -24,9 +24,9 @@ public class MockDispatcherServlet extends DispatcherServlet {
         lazyInit();
       }
       request.setMethod(method.name());
-      System.out.println("URI=" + request.getRequestURI());
-      System.out.println("method=" + request.getMethod());
-      System.out.println("remoteAddr=" + request.getRemoteAddr());
+//      System.out.println("URI=" + request.getRequestURI());
+//      System.out.println("method=" + request.getMethod());
+//      System.out.println("remoteAddr=" + request.getRemoteAddr());
 //      System.out.println("username=" + request.getUserPrincipal().getName());
       MockHttpServletResponse response = new MockHttpServletResponse();
       dispatcherServlet.processRequest(request, response);
@@ -39,12 +39,12 @@ public class MockDispatcherServlet extends DispatcherServlet {
   @Override
   protected void render(ModelAndView mv, HttpServletRequest request, HttpServletResponse response) throws Exception {
     lastModelAndView = mv;
-    System.out.println("intercepted ModelAndView");
+//    System.out.println("intercepted ModelAndView");
     super.render(mv, request, response);
   }
 
   private static void lazyInit() throws ServletException {
-    System.out.println("Initializing " + MockDispatcherServlet.class.getSimpleName());
+//    System.out.println("Initializing " + MockDispatcherServlet.class.getSimpleName());
     dispatcherServlet = new MockDispatcherServlet();
     MockServletConfig mockServletConfig = new MockServletConfig("hungryhawk");
     mockServletConfig.addInitParameter("contextConfigLocation", contextConfigLocation);
