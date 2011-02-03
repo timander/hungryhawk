@@ -5,10 +5,9 @@
 |date|${threeweeks}|
 )
 
-**!
+!include .FrontPage.HungryHawk.ManageEvents
 
-|Lisa|
-|plans a restaurant|${restaurant}|
+**!
 
 |Vicki|
 |makes a reservation for|${threeweeks}|with|4|guests|

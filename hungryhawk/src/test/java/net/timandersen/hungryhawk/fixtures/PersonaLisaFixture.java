@@ -2,13 +2,10 @@ package net.timandersen.hungryhawk.fixtures;
 
 import fitlibrary.DoFixture;
 import net.timandersen.model.domain.Event;
-import net.timandersen.repository.EventDao;
 import net.timandersen.util.MockDispatcherServlet;
-import net.timandersen.util.SpringContextWrapper;
-import net.timandersen.web.EventController;
 import org.springframework.http.HttpMethod;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Map;
@@ -20,24 +17,31 @@ public class PersonaLisaFixture extends DoFixture {
     request.addParameters(fields);
     request.addParameter("action", "save");
     request.setRequestURI("/events/add");
-//    controller().handleRequest(request, new MockHttpServletResponse());
-    MockDispatcherServlet.handleRequest(request, HttpMethod.POST);
-    return dao().findByName(fields.get("name")) != null;
-  }
+    //old way
+    //controller().handleRequest(request, new MockHttpServletResponse());
+    //return dao().findByName(fields.get("name")) != null;
 
-  private EventController controller() {
-    return SpringContextWrapper.getBean(EventController.class);
+    //spring dispatcher way!
+    ModelAndView mav = MockDispatcherServlet.handleRequest(request, HttpMethod.POST);
+    return mav.getViewName().equals("events/list");
   }
 
   public List<Event> reviewsScheduleOfEvents() throws Exception {
-    MockHttpServletResponse response = new MockHttpServletResponse();
-//    controller().handleRequest(new MockHttpServletRequest(), response);
-    MockDispatcherServlet.handleRequest(new MockHttpServletRequest(), HttpMethod.GET);
-    return dao().findAll();
+    //old way:
+    //controller().handleRequest(new MockHttpServletRequest(), response);
+    //return dao().findAll();
+
+    //spring dispatcher way!
+    ModelAndView mav = MockDispatcherServlet.handleRequest(new MockHttpServletRequest(), HttpMethod.GET);
+    return (List<Event>) mav.getModel().get("events");
   }
 
-  private EventDao dao() {
-    return SpringContextWrapper.getBean(EventDao.class);
-  }
+//  private EventDao dao() {
+//    return SpringContextWrapper.getBean(EventDao.class);
+//  }
+//
+//  private EventController controller() {
+//    return SpringContextWrapper.getBean(EventController.class);
+//  }
 
 }

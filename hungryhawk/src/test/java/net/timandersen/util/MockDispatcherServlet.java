@@ -5,16 +5,20 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletConfig;
 import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import static net.timandersen.util.SpringContextWrapper.contextConfigLocation;
 
 public class MockDispatcherServlet extends DispatcherServlet {
 
   private static MockDispatcherServlet dispatcherServlet;
+  private static ModelAndView lastModelAndView;
 
-  public static void handleRequest(MockHttpServletRequest request, HttpMethod method) {
+  public static ModelAndView handleRequest(MockHttpServletRequest request, HttpMethod method) {
     try {
       if (dispatcherServlet == null) {
         lazyInit();
@@ -24,10 +28,19 @@ public class MockDispatcherServlet extends DispatcherServlet {
       System.out.println("method=" + request.getMethod());
       System.out.println("remoteAddr=" + request.getRemoteAddr());
 //      System.out.println("username=" + request.getUserPrincipal().getName());
-      dispatcherServlet.processRequest(request, new MockHttpServletResponse());
+      MockHttpServletResponse response = new MockHttpServletResponse();
+      dispatcherServlet.processRequest(request, response);
+      return lastModelAndView;
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
+  }
+
+  @Override
+  protected void render(ModelAndView mv, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    lastModelAndView = mv;
+    System.out.println("intercepted ModelAndView");
+    super.render(mv, request, response);
   }
 
   private static void lazyInit() throws ServletException {
