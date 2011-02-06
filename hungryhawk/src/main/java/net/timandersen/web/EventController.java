@@ -1,42 +1,69 @@
 package net.timandersen.web;
 
 import net.timandersen.model.domain.Event;
+import net.timandersen.model.form.EventForm;
 import net.timandersen.repository.EventDao;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
+import java.util.List;
 
-public class EventController implements Controller {
+@Controller
+public class EventController {
 
+  @Autowired
   private EventDao eventDao;
 
-  @Override
-  public ModelAndView handleRequest(HttpServletRequest request,
-                                    HttpServletResponse response) throws Exception {
-    System.out.println("EventController.handleRequest");
-
-    if ("save".equals(request.getParameter("action"))) {
-      String name = request.getParameter("name");
-      Date date = new Date(request.getParameter("date"));
-      eventDao.save(new Event(name, date));
+  @ModelAttribute
+  public EventForm newRequest(@RequestParam(required = false) Long id) {
+    System.out.println("EventController.newRequest");
+    EventForm eventForm = new EventForm();
+    if (id != null) {
+      Event event = eventDao.findById(id);
+      eventForm.setName(event.getName());
+      eventForm.setDate(event.getDate());
+    } else {
+      eventForm.setEvents(eventDao.findAll());
     }
-
-    if ("events/add".equals(request.getRequestURI())) {
-      ModelAndView modelAndView = new ModelAndView("events/add");
-      modelAndView.addObject("event", new Event());
-      return modelAndView;
-    }
-
-    ModelAndView modelAndView = new ModelAndView("events/list");
-    modelAndView.addObject("events", eventDao.findAll());
-    return modelAndView;
+    System.out.println("eventForm.getEvents().size() = " + eventForm.getEvents().size());
+    return eventForm;
   }
 
-  public void setEventDao(EventDao eventDao) {
-    this.eventDao = eventDao;
+  // url = /hungryhawk/events
+  @RequestMapping(value = "/events", method = RequestMethod.GET)
+  public String listEvents(ModelMap model) {
+    System.out.println("EventController.listEvents");
+    List<Event> events = eventDao.findAll();
+    EventForm form = new EventForm();
+    form.setEvents(events);
+    model.addAttribute("command", form);
+    return "/events/list";
+  }
+
+  // url = /hungryhawk/events/add
+  @RequestMapping(value = "/events/add", method = RequestMethod.GET)
+  public String newEvent(ModelMap model) {
+    System.out.println("EventController.newEvent");
+    EventForm form = new EventForm();
+    model.addAttribute("command", form);
+    return "/events/add";
+  }
+
+  // url = /hungryhawk/events/save
+  @RequestMapping(value = "/events/save", method = RequestMethod.POST)
+  public String saveEvent(EventForm incomingForm, BindingResult result, ModelMap model) {
+    Event event = new Event(incomingForm.getName(), incomingForm.getDate());
+    eventDao.save(event);
+    EventForm form = new EventForm();
+    form.setEvents(eventDao.findAll());
+    model.addAttribute("command", form);
+    return "/events/list";
   }
 
 }

@@ -17,25 +17,4 @@
     <property name="location" value="classpath:config.properties"/>
   </bean>
 
-  <!--<context:component-scan base-package="net.timandersen"/>-->
-
-  <!--<mvc:annotation-driven />-->
-
-  <!--<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">-->
-  <!--<property name="order" value="0"/>-->
-  <!--</bean>-->
-
-  <!--<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>-->
-
-  <!--&lt;!&ndash; Maps request paths to @Controller classes; e.g. a path of /home looks for a controller named HomeController &ndash;&gt;-->
-  <!--<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">-->
-  <!--<property name="order" value="1" />-->
-  <!--<property name="defaultHandler">-->
-  <!--&lt;!&ndash; If no @Controller match, map path to a view to render; e.g. the "/intro" path would map to the view named "intro" &ndash;&gt;-->
-  <!--<bean class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />-->
-  <!--</property>-->
-  <!--</bean>-->
-
-  <!-- Scans within the base package of the application for @Components to configure as beans -->
-
 </beans>

@@ -2,7 +2,7 @@
 
 <h1>Add/Edit Event</h1>
 
-<c:url var="url" value="/events/save"/>
+<c:url var="url" value="save"/>
 <form:form action="${url}" commandName="eventForm">
     <fieldset>
         <div>

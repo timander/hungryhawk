@@ -12,6 +12,11 @@ public class Event implements Serializable {
   public Event() {
   }
 
+  public Event(String name, Date date) {
+    this.name = name;
+    this.date = date;
+  }
+
   public void setId(Long id) {
     this.id = id;
   }
@@ -21,11 +26,6 @@ public class Event implements Serializable {
   }
 
   public void setDate(Date date) {
-    this.date = date;
-  }
-
-  public Event(String name, Date date) {
-    this.name = name;
     this.date = date;
   }
 
