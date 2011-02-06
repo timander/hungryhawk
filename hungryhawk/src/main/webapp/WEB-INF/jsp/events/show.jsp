@@ -3,7 +3,7 @@
 <h1>Show Event</h1>
 
 <c:url var="url" value="/events/edit"/>
-<form:form action="${url}" commandName="eventForm">
+<form:form action="${url}" commandName="command">
     <fieldset>
         <div>
           <label for="name">Name</label>

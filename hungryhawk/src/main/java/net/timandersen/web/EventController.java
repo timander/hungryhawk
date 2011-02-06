@@ -55,6 +55,17 @@ public class EventController {
     return "/events/add";
   }
 
+  // url = /hungryhawk/events/show/{1}
+  @RequestMapping(value = "/events/show/{eventId}", method = RequestMethod.GET)
+  public String showEvent(@RequestParam Long eventId, ModelMap model) {
+    Event event = eventDao.findById(eventId);
+    EventForm form = new EventForm();
+    form.setName(event.getName());
+    form.setDate(event.getDate());
+    model.addAttribute("command", form);
+    return "/events/show";
+  }
+
   // url = /hungryhawk/events/save
   @RequestMapping(value = "/events/save", method = RequestMethod.POST)
   public String saveEvent(EventForm incomingForm, BindingResult result, ModelMap model) {
@@ -63,7 +74,7 @@ public class EventController {
     EventForm form = new EventForm();
     form.setEvents(eventDao.findAll());
     model.addAttribute("command", form);
-    return "/events/list";
+    return "/events/show";
   }
 
 }
